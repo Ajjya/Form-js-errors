@@ -44,16 +44,15 @@ _options - object with options_
 ### Options
 _You can translate ln/en.json, create needed language and add it to ln folder.
 #### show_error_text: boolean
-Show errors under form elements. Default: true.
+Shows errors above form elements. Default: true.
 #### show_modal: boolean
-Show modal after sending email. Default: true.
+Shows modal after sending email. Default: true.
 #### show_message: boolean
-Show message with errors under form. Default: true.
+Shows message with errors above form. Default: true.
 #### reactive_form: boolean
-Show error on each form element after blur. Default: true.
+Shows error on each form element after blur. Default: true.
 #### language: 'ln'
 Default: 'en'.
-
 **Example**
 ```js
 	if(document.getElementById('contact-form')){
