@@ -3,12 +3,8 @@
 ## Table of contents
 * [Use](#use)
 * [Requirements](#requirements)
-* [Features](#features)
 * [Getting started](#getting-started)
-* [Options](#methods)
-* [Browser support](#browser-support)
-* [Support](#support)
-* [License](#license)
+* [Options](#options)
 ## Use
 * [jQuery v1.9.1+](https://jquery.com/)
 * [Flui](https://github.com/Ajjya/File-library/tree/master/js/media-library/flui)
