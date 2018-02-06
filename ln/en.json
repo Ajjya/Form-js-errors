@@ -1,0 +1,8 @@
+{
+	"error": "Error.",
+	"error_send": "Error of sending email.",
+	"success_send": "Success of sending email.",
+	"error_email": "is wrong. Format is incorrect.",
+	"repeat_error": "doesn't match to repeat field.",
+	"error_required": "is required."
+}
