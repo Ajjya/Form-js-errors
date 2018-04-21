@@ -75,8 +75,10 @@ You can use attr fe-name for customizing messages. If fe-name is not specified l
 	<input type="text" name="phone" id="phone" placeholder="Mobile Number" value="" fe-name="Mobile Number" required>
 ```
 ###Using functions in any time and place you need
-**showSuccessModal** - shows success message, no arguments
-**validate** - validates you fields, no arguments
+#### showSuccessModal
+shows success message, no arguments
+#### validate: boolean
+validates you fields, no arguments, returns true or false according to validation
 ###Example of usage with Google invisile captcha
 ```js
 		var formErr;
