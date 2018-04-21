@@ -30,7 +30,7 @@ Include files:
 In head tag add link to path/to/form-error-folder
 ```html
 <script type="text/javascript">
-	var fe_root = '/path/to/form-error-folder';
+	var fe_root = '/url/to/form-error-folder';
 </script>
 ```
 In footer (or in default js file) add next code.
@@ -66,3 +66,37 @@ Default: 'en'.
 		);
 	} 
 ```
+## Advanced usage
+###Using custom names of fields
+You can use attr fe-name for customizing messages. If fe-name is not specified library uses attr name.
+```html
+	<input type="hidden" name="_wpnonce" value="<?php echo md5('secure' . date('Y-m-d') . $config['site_url'])?>">
+	<input type="text" name="user_name" id="user_name" placeholder="Full Name" value="" fe-name="Full Name" required>
+	<input type="text" name="phone" id="phone" placeholder="Mobile Number" value="" fe-name="Mobile Number" required>
+```
+###Using functions in any time and place you need
+**showSuccessModal** - shows success message, no arguments
+**validate** - validates you fields, no arguments
+###Example of usage with Google invisile captcha
+```js
+		var formErr;
+
+		jQuery(document).ready(function( $ ) {
+			formErr = new fe(document.getElementById('contact-form'), {'show_message': false});
+			/*here your event which determines sucessfull sending*/
+			if(email-sent-succesfull-event){
+				formErr.showSuccessModal();
+			}
+			
+		});
+
+
+		function onSubmit(){
+			var res = formErr.validate();
+			if(res){
+				$('#contact-form').submit();
+			}
+			grecaptcha.reset();
+		}
+```
+
