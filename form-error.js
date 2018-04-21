@@ -80,6 +80,7 @@
 		xobj.onreadystatechange = function () {
 			if (xobj.readyState == 4 && xobj.status == "200") {
 				callback(xobj.responseText);
+				$(document).trigger('fe_ln_loaded');
 			}
 		};
 		xobj.send(null);  
@@ -113,7 +114,7 @@
 
 	fe.prototype.validateOne = function(self, el){
 		var $el = $(el);
-		var name = $(el).attr('fe-name');
+		var name = self.__getElementName(el);
 		var val = $el.val();
 		var is_error = false;
 		/*Check required*/
@@ -148,6 +149,15 @@
 		}
 	}
 
+	fe.prototype.__getElementName = function(el){
+		var name = $(el).attr('fe-name');
+		if(!name){
+			name = $(el).attr('name');
+		}
+
+		return name;
+	}
+
 	fe.prototype.validateAll = function(self){
 		
 		self.resetErrors();
@@ -157,7 +167,7 @@
 
 		self.$el.find('[required]').each(function(i, val){
 			var $cur_el = $(this);
-			var name = $cur_el.attr('fe-name');
+			var name = self.__getElementName(this);
 
 			if(!$cur_el.val()){
 				var error = name + " " + self.ln.error_required;
@@ -170,7 +180,7 @@
 		/*Check emails*/
 		self.$el.find('[type="email"]').each(function(i, val){
 			var $cur_el = $(this);
-			var name = $cur_el.attr('fe-name');
+			var name = self.__getElementName(this);
 
 			if(!/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test($cur_el.val())){
 				var error = name + " " + self.ln.error_email;
@@ -184,7 +194,7 @@
 
 		self.$el.find('[repeat_to]').each(function(i, val){
 			var $cur_el = $(this);
-			var name = $cur_el.attr('fe-name');
+			var name = self.__getElementName(this);
 			var compare_value = self.$el.find('name="' + $cur_el.attr('repeat_to') + '"').val();
 
 
@@ -230,7 +240,6 @@
 	}
 
 	fe.prototype.showErrorMessage = function(err_str){
-		
 		this.$fe_messages.empty().append(err_str);
 	}
 
@@ -268,6 +277,27 @@
 		}
 		this.$fe_messages.empty();
 		this.$el.find('.fe_error_message').remove();
+	}
+
+	/*functions for external usage*/
+
+	fe.prototype.showSuccessModal = function(){
+		var self = this;
+		if(self.ln.success_send){
+			self.showModal(self.ln.success_send);
+		} else {
+			$(document).on('fe_ln_loaded', function(){
+				self.showModal(self.ln.success_send);
+			})
+		}
+		
+		
+	}
+
+	fe.prototype.validate = function(){
+		var res = this.validateAll(this);
+
+		return res;
 	}
 
 	window.fe = fe;
