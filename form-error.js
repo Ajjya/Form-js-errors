@@ -1,5 +1,7 @@
 /**/
 
+
+
 (function(window, jQuery, flmodal){
 	$ = jQuery;
 	/*el = form*/
@@ -254,10 +256,11 @@
 		var $el = $(el);
 		$el.removeClass('fe_suc');
 		$el.addClass('fe_error');
+		var cl = $el.attr('name');
 		this.errors.push(error_message);
 		if(this.options.show_error_text){
 			this.removeNotification($el);
-			$el.wrap('<div class="fe_wrap"></div>');
+			$el.wrap('<div class="fe_wrap fe_attr_' + cl + '"></div>');
 			var $par = $el.closest(".fe_wrap");
 			$par.prepend('<div class="fe_error_message">' + error_message + '</div>');
 		}
