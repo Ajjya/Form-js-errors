@@ -1,7 +1,4 @@
 /**/
-
-
-
 (function(window, jQuery, flmodal){
 	$ = jQuery;
 	/*el = form*/
@@ -11,15 +8,15 @@
 			return false;
 		}
 		this.options = {
-			lang: 'en',
+			ln: 'en',
 			show_error_text: true,
 			show_modal: true,
 			show_message: true,
 			reactive_form: true
 		}
 
-		if(options.lang != undefined){
-			this.options.lang = options.lang;
+		if(options.ln != undefined){
+			this.options.ln = options.ln;
 		}
 
 		if(options.show_error_text != undefined){
@@ -41,15 +38,12 @@
 		this.errors = [];
 		this.el = el;
 		this.$el = $(el);
-		this.$fe_messages;
+
 		this.ln = {};
 
 		this.init = function(ln){
 			self = this;
 			this.ln = JSON.parse(ln);
-
-			this.$el.prepend('<div id="fe_messages"></div>');
-			this.$fe_messages = this.$el.find('#fe_messages');
 
 			if(this.options.reactive_form){
 				$(this.el.elements).each(function(i, val){
@@ -66,9 +60,17 @@
 				}
 			});
 
+			self.$el.find('input').each(function(i, val){
+				$(this).fltooltip();
+			});
+			self.$el.find('textarea').each(function(i, val){
+				$(this).fltooltip();
+			});
+
+
 		}
 		
-		this.__loadJSON(this.init.bind(this), fe_root + 'ln/' + this.options.lang + '.json');
+		this.__loadJSON(this.init.bind(this), fe_root + 'ln/' + this.options.ln + '.json');
 	}
 
 	fe.prototype.beforeSubmit = function(){
@@ -108,7 +110,6 @@
 	}
 
 	fe.prototype.showModal = function(message){
-		
 		this.init_modal();
 		$('#fe_modal').find('.modal-body').empty().append(message);
 		$('#fe_modal').flmodal('show');
@@ -161,7 +162,6 @@
 	}
 
 	fe.prototype.validateAll = function(self){
-		
 		self.resetErrors();
 		var is_error = false;
 		var errors = [];
@@ -259,18 +259,12 @@
 		var cl = $el.attr('name');
 		this.errors.push(error_message);
 		if(this.options.show_error_text){
-			this.removeNotification($el);
-			$el.wrap('<div class="fe_wrap fe_attr_' + cl + '"></div>');
-			var $par = $el.closest(".fe_wrap");
-			$par.prepend('<div class="fe_error_message">' + error_message + '</div>');
+			$el.attr('data-original-title', error_message).attr('title', error_message).fltooltip('show');
 		}
 	}
 
 	fe.prototype.removeNotification = function($el){
-		if($el.parent('.fe_wrap').length > 0){
-			$el.prev('.fe_error_message').remove();
-			$el.unwrap();
-		}
+		$el.attr.fltooltip('hide');
 	}
 
 	fe.prototype.resetErrors = function(){
@@ -279,7 +273,13 @@
 			$(self.el.elements[i]).removeClass('fe_error');
 		}
 		this.$fe_messages.empty();
-		this.$el.find('.fe_error_message').remove();
+
+		this.$el.find('input').each(function(i, val){
+			$(this).fltooltip('hide');
+		});
+		this.$el.find('textarea').each(function(i, val){
+			$(this).fltooltip('hide');
+		});
 	}
 
 	/*functions for external usage*/
@@ -293,13 +293,10 @@
 				self.showModal(self.ln.success_send);
 			})
 		}
-		
-		
 	}
 
 	fe.prototype.validate = function(){
 		var res = this.validateAll(this);
-
 		return res;
 	}
 
