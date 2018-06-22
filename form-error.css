@@ -47,3 +47,18 @@
 .modal-dialog{
 	margin-top: 100px;
 }
+
+.fltooltip-inner,
+.fltooltip.top > .fltooltip-arrow {
+  display: none;
+}
+
+.fe_error + .fltooltip.top > .fltooltip-inner{
+  background-color: #f00;
+  display: block;
+}
+
+.fe_error + .fltooltip.top > .fltooltip-arrow {
+  border-top-color: #f00;
+  display: block;
+}
