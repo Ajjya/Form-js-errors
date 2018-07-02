@@ -42,8 +42,8 @@
 		this.ln = {};
 
 		this.init = function(ln){
-			self = this;
-			this.ln = JSON.parse(ln);
+			var self = this;
+			self.ln = JSON.parse(ln);
 
 			if(this.options.reactive_form){
 				$(this.el.elements).each(function(i, val){
@@ -53,7 +53,8 @@
 				});
 			} 
 
-			this.el.addEventListener("submit", function(event){
+			self.$el.on("submit", function(event){
+		
 				var va = self.validateAll(self);
 				if(!va){
 					event.preventDefault();
@@ -162,7 +163,9 @@
 	}
 
 	fe.prototype.validateAll = function(self){
+
 		self.resetErrors();
+
 		var is_error = false;
 		var errors = [];
 		/*Check required fields*/
@@ -224,7 +227,7 @@
 	}
 
 	fe.prototype.showSuccessMessage = function(){
-		this.$fe_messages.empty().append(this.ln.success_send);
+		//this.$fe_messages.empty().append(this.ln.success_send);
 	}
 
 	fe.prototype.errorToString = function(err_arr){
@@ -242,7 +245,7 @@
 	}
 
 	fe.prototype.showErrorMessage = function(err_str){
-		this.$fe_messages.empty().append(err_str);
+		//this.$fe_messages.empty().append(err_str);
 	}
 
 	fe.prototype.addSuccess = function(el){
@@ -264,15 +267,17 @@
 	}
 
 	fe.prototype.removeNotification = function($el){
-		$el.attr.fltooltip('hide');
+		$el.fltooltip('hide');
 	}
 
 	fe.prototype.resetErrors = function(){
+		var self = this;
 		this.errors = [];
 		for(var i = 0; i < this.el.elements.length; i++){
 			$(self.el.elements[i]).removeClass('fe_error');
 		}
-		this.$fe_messages.empty();
+
+		//this.$fe_messages.empty();
 
 		this.$el.find('input').each(function(i, val){
 			$(this).fltooltip('hide');
