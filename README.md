@@ -70,7 +70,6 @@ Default: 'en'.
 ###Using custom names of fields
 You can use attr fe-name for customizing messages. If fe-name is not specified library uses attr name.
 ```html
-	<input type="hidden" name="_wpnonce" value="<?php echo md5('secure' . date('Y-m-d') . $config['site_url'])?>">
 	<input type="text" name="user_name" id="user_name" placeholder="Full Name" value="" fe-name="Full Name" required>
 	<input type="text" name="phone" id="phone" placeholder="Mobile Number" value="" fe-name="Mobile Number" required>
 ```
