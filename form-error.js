@@ -117,6 +117,7 @@
 	}
 
 	fe.prototype.validateOne = function(self, el){
+		debugger;
 		var $el = $(el);
 		var name = self.__getElementName(el);
 		var val = $el.val();
@@ -139,7 +140,7 @@
 
 		/*check repeat fiels*/
 		if($el.attr('repeat_to')){
-			var compare_value = self.$el.find('name="' + $el.attr('repeat_to') + '"').val();
+			var compare_value = self.$el.find(['name="' + $el.attr('repeat_to') + '"']).val();
 
 			if(compare_value != val){
 				self.addError(el, name + ' ' + self.ln.repeat_error);
@@ -163,7 +164,6 @@
 	}
 
 	fe.prototype.validateAll = function(self){
-
 		self.resetErrors();
 
 		var is_error = false;
@@ -200,7 +200,7 @@
 		self.$el.find('[repeat_to]').each(function(i, val){
 			var $cur_el = $(this);
 			var name = self.__getElementName(this);
-			var compare_value = self.$el.find('name="' + $cur_el.attr('repeat_to') + '"').val();
+			var compare_value = self.$el.find(['name="' + $cur_el.attr('repeat_to') + '"']).val();
 
 
 			if(compare_value != $cur_el.val()){
@@ -307,3 +307,4 @@
 
 	window.fe = fe;
 })(window, jQuery);
+
